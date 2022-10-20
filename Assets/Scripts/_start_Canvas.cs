@@ -11,6 +11,8 @@ public class _start_Canvas : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        FindObjectOfType<PersistenceManager>().LoadDataFromDisk();
+
         int _highcore = FindObjectOfType<PersistenceManager>().GetHighScore();
 
         if (_highcore > 0)
@@ -26,14 +28,19 @@ public class _start_Canvas : MonoBehaviour
 
     public void ButtonExitGame()
     {
-        // save any game data here
-        #if UNITY_EDITOR
-            // Application.Quit() does not work in the editor so
-            // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
-            UnityEditor.EditorApplication.isPlaying = false;
-        #else
-            Application.Quit();
-        #endif
+        //Debug.Log("Calling to disk");
+
+        //SaveDataToDisk()
+        FindObjectOfType<PersistenceManager>().SaveDataToDisk();
+
+// save any game data here
+#if UNITY_EDITOR
+        // Application.Quit() does not work in the editor so
+        // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+    Application.Quit();
+#endif
     }
 
     public void ButtonStartGame()

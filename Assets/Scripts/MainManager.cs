@@ -15,10 +15,7 @@ public class MainManager : MonoBehaviour
     
     private bool m_Started = false;
     private int m_Points;
-    
-    //private bool m_GameOver = false;
-
-    
+     
     // Start is called before the first frame update
     void Start()
     {
@@ -52,14 +49,7 @@ public class MainManager : MonoBehaviour
                 Ball.transform.SetParent(null);
                 Ball.AddForce(forceDir * 2.0f, ForceMode.VelocityChange);
             }
-        }
-        //else if (m_GameOver)
-        //{
-        //    if (Input.GetKeyDown(KeyCode.Space))
-        //    {
-        //        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        //    }
-        //}
+        }        
     }
 
     void AddPoint(int point)
@@ -75,7 +65,7 @@ public class MainManager : MonoBehaviour
     {
         //m_GameOver = true;
         //GameOverText.SetActive(true);
-
+        Debug.Log("dasdadadas");
         FindObjectOfType<PersistenceManager>().SaveScore();
 
         // Restart from _start screen
