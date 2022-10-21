@@ -65,7 +65,8 @@ public class PersistenceManager : MonoBehaviour
         return highscoreName;
     }
 
-    [System.Serializable]   // ------------------------ SAVING AND LOADING ---------------------------
+    // ------------------------ SAVING AND LOADING ---------------------------
+    [System.Serializable]   // Can be constructed and deconstructed later
     class SaveData
     {
         public string highscoreName;
@@ -74,7 +75,6 @@ public class PersistenceManager : MonoBehaviour
 
     public void SaveDataToDisk()
     {
-        Debug.Log("Saving to disk");
         SaveData data = new SaveData();
         data.highscoreName = highscoreName;
         data.highScore = highScore;
@@ -89,8 +89,6 @@ public class PersistenceManager : MonoBehaviour
 
     public void LoadDataFromDisk()
     {
-        Debug.Log("Reading from disk");
-
         string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
         string path = System.IO.Path.GetDirectoryName(strExeFilePath) + "/savefile.json";
         //string path = Application.persistentDataPath + "/savefile.json";
