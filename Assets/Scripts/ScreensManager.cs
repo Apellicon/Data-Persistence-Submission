@@ -33,6 +33,7 @@ public class ScreensManager : MonoBehaviour
     private void LoadScene(int scene)
     {
         sceneNumber = scene;
+        FindObjectOfType<PersistenceManager>().ResetScore();
         SceneManager.LoadScene(scene);
     }
 }

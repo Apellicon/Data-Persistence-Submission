@@ -6,6 +6,8 @@ using UnityEngine;
 public class PersistenceManager : MonoBehaviour
 {
     private int highScore;
+    private string highscoreName;
+
     private int currentScore;
     private string playerName;
 
@@ -13,8 +15,6 @@ public class PersistenceManager : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
-
-        //LoadDataFromDisk();
     }
 
     public void SavePlayerName(string pName)
@@ -27,14 +27,16 @@ public class PersistenceManager : MonoBehaviour
         return playerName;
     }
 
-    public void SaveScore()
+    public void RememberScore()
     {
-        ///Debug.Log("Current: " + currentScore + " High: " + highScore);
         // Save high score if needed
         if (currentScore > highScore)
         {
-            //Debug.Log("Saving score");
+            Debug.Log("PersistenceManager.SaveScore");
             highScore = currentScore;
+            highscoreName = playerName;
+
+            SaveDataToDisk();
         }
     }
 
@@ -48,9 +50,19 @@ public class PersistenceManager : MonoBehaviour
         currentScore += scoreToAdd;
     }
 
+    public void ResetScore()
+    {
+        currentScore = 0;
+    }
+
     public int GetHighScore()
     {
         return highScore;
+    }
+
+    public string GetHighScoreName()
+    {
+        return highscoreName;
     }
 
     [System.Serializable]   // ------------------------ SAVING AND LOADING ---------------------------
@@ -64,25 +76,30 @@ public class PersistenceManager : MonoBehaviour
     {
         Debug.Log("Saving to disk");
         SaveData data = new SaveData();
-        data.highscoreName = playerName;
+        data.highscoreName = highscoreName;
         data.highScore = highScore;
 
         string json = JsonUtility.ToJson(data);
-        Debug.Log(json);
-        File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
+
+        //File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
+        string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+        string strWorkPath = System.IO.Path.GetDirectoryName(strExeFilePath);
+        File.WriteAllText(strWorkPath + "/savefile.json", json);
     }
 
     public void LoadDataFromDisk()
     {
         Debug.Log("Reading from disk");
-        string path = Application.persistentDataPath + "/savefile.json";
-        Debug.Log(path);
+
+        string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+        string path = System.IO.Path.GetDirectoryName(strExeFilePath) + "/savefile.json";
+        //string path = Application.persistentDataPath + "/savefile.json";
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
             SaveData data = JsonUtility.FromJson<SaveData>(json);
 
-            playerName = data.highscoreName;
+            highscoreName = data.highscoreName;
             highScore = data.highScore;
         }
     }

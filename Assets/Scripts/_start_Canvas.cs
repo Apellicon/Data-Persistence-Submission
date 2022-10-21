@@ -18,7 +18,7 @@ public class _start_Canvas : MonoBehaviour
         if (_highcore > 0)
         {
             // Get previous highscore
-            highscoreText.text = "High Score: " + FindObjectOfType<PersistenceManager>().GetHighScore().ToString() + " - " + FindObjectOfType<PersistenceManager>().GetPlayerName();
+            highscoreText.text = "High Score: " + _highcore.ToString() + " - " + FindObjectOfType<PersistenceManager>().GetHighScoreName();
         }
         else
         {
@@ -27,12 +27,7 @@ public class _start_Canvas : MonoBehaviour
     }
 
     public void ButtonExitGame()
-    {
-        //Debug.Log("Calling to disk");
-
-        //SaveDataToDisk()
-        FindObjectOfType<PersistenceManager>().SaveDataToDisk();
-
+    {        
 // save any game data here
 #if UNITY_EDITOR
         // Application.Quit() does not work in the editor so

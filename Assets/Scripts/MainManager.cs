@@ -14,8 +14,7 @@ public class MainManager : MonoBehaviour
     public GameObject GameOverText;
     
     private bool m_Started = false;
-    private int m_Points;
-     
+        
     // Start is called before the first frame update
     void Start()
     {
@@ -54,19 +53,13 @@ public class MainManager : MonoBehaviour
 
     void AddPoint(int point)
     {
-        //m_Points += point;
-
-        //ScoreText.text = $"Score : {m_Points}";
         FindObjectOfType<PersistenceManager>().SetScore(point);
         FindObjectOfType<_game_Canvas>().UpdateScores();
     }
 
     public void GameOver()
     {
-        //m_GameOver = true;
-        //GameOverText.SetActive(true);
-        Debug.Log("dasdadadas");
-        FindObjectOfType<PersistenceManager>().SaveScore();
+        FindObjectOfType<PersistenceManager>().RememberScore();
 
         // Restart from _start screen
         SceneManager.LoadScene(0);

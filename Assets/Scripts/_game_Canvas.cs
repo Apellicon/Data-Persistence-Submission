@@ -13,16 +13,21 @@ public class _game_Canvas : MonoBehaviour
     {
         UpdateScores();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
         
-    }
-
     public void UpdateScores()
     {
-        highscoreText.text = "High Score: " + FindObjectOfType<PersistenceManager>().GetHighScore() + " - Name: " + FindObjectOfType<PersistenceManager>().GetPlayerName();
+        int _highcore = FindObjectOfType<PersistenceManager>().GetHighScore();
+
+        if (_highcore > 0)
+        {
+            // Get previous highscore
+            highscoreText.text = "High Score: " + _highcore.ToString() + " - " + FindObjectOfType<PersistenceManager>().GetHighScoreName();
+        }
+        else
+        {
+            highscoreText.text = "";
+        }
+
         currentscoreText.text = "Score: " + FindObjectOfType<PersistenceManager>().GetScore();
     }
 }
